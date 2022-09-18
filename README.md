@@ -1,6 +1,6 @@
 # Scripts de QGIS para procesamiento de datos de Costa Rica para REDD+
 
-Este repositorio contiene un conjunto de *scripts* para procesar datos de Costa Rica relacionados con la iniciativa de Reducción de Emisiones por Deforestación y Degradación más conservación y aumento de reservas de carbono forestal (REDD+). Los scripts de distriuyen como un complemento del sistema de información geográfica [QGIS](https://qgis.org) y su marco de trabajo [Processing](https://docs.qgis.org/3.22/en/docs/user_manual/processing/intro.html).
+Este repositorio contiene un conjunto de *scripts* para procesar datos de Costa Rica relacionados con el mecanismo de [Reducción de Emisiones por Deforestación y Degradación de bosques más conservación y aumento de reservas de carbono forestal (REDD+)](https://es.wikipedia.org/wiki/Reducci%C3%B3n_de_las_emisiones_de_la_deforestaci%C3%B3n). Los scripts de distriuyen como un complemento del sistema de información geográfica [QGIS](https://qgis.org) y su marco de trabajo [Processing](https://docs.qgis.org/3.22/en/docs/user_manual/processing/intro.html).
 
 ## Instalación
 
@@ -23,4 +23,4 @@ git clone https://github.com/redd-costarica-scripts/redd-costarica-scripts-qgis.
 
 El directorio resultante debe ser ubicado en el directorio de complementos de QGIS (ej. `D:\Users\mfvargas\AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins`).
 
-Luego, debe instalarlo desde la opción de menú `Complementos - Manejar e instalar complementos` de QGIS.
+Luego, debe instalar el complemento con la opción de menú `Complementos - Manejar e instalar complementos` de QGIS.
