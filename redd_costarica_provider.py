@@ -31,7 +31,7 @@ __copyright__ = '(C) 2022 by Manuel Vargas'
 __revision__ = '$Format:%H$'
 
 from qgis.core import QgsProcessingProvider
-from .redd_costarica_algorithm import Redd_CostaRicaAlgorithm
+from .reflectancia_algorithm import ReflectanciaAlgorithm
 
 
 class Redd_CostaRicaProvider(QgsProcessingProvider):
@@ -53,7 +53,7 @@ class Redd_CostaRicaProvider(QgsProcessingProvider):
         """
         Loads all algorithms belonging to this provider.
         """
-        self.addAlgorithm(Redd_CostaRicaAlgorithm())
+        self.addAlgorithm(ReflectanciaAlgorithm())
         # add additional algorithms here
         # self.addAlgorithm(MyOtherAlgorithm())
 
