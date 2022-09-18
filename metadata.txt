@@ -10,7 +10,7 @@ version=0.1
 author=Manuel Vargas
 email=mfvargas@gmail.com
 
-about=Scripts para REDD+ en Costa Rica
+about=Scripts para procesamiento de datos de REDD+ en Costa Rica
 
 tracker=https://github.com/redd-costarica-scripts/redd-costarica-scripts-qgis/issues
 repository=https://github.com/redd-costarica-scripts/redd-costarica-scripts-qgis
