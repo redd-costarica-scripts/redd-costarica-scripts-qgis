@@ -153,10 +153,31 @@ Se realiza con la herramienta `Clip raster by Mask Layer (gdalwarp)` de `Process
 - Imagen de referencia recortada
 
 ![](img/recortar-referencia-p16-01.png)
-Imagen: Herramienta `Clip raster by Mask Layer (gdalwarp)` de `Processing`.
+
+Figura. Herramienta `Clip raster by Mask Layer (gdalwarp)` de `Processing`.
 
 ![](img/referencia-p16-recortada.png)
-Imagen: Imagen de referencia recortada.
+
+Figura. Imagen de referencia recortada.
+
+
+#### 6.2. Recorte de la imagen con normalización horaria con la máscara vectorial del contorno del país
+Se realiza con la herramienta `Clip raster by Mask Layer (gdalwarp)` de `Processing`.
+
+**Entradas**
+- Imagen con normalización horaria
+- Máscara vectorial para la "pasada" correspondiente (P14, P15, P16)
+
+**Salidas**
+- Imagen con normalización horaria recortada
+
+![](img/recortar-horaria-01.png)
+
+Figura. Herramienta `Clip raster by Mask Layer (gdalwarp)` de `Processing`.
+
+![](img/horaria-recortada.png)
+
+Figura. Imagen con normalización horaria recortada.
 
 
 ## Procedimientos en bash
