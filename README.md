@@ -180,4 +180,7 @@ gdal_merge.py \
 # Creación del archivo con la pila con valores de reflectancia en el CRS de las bandas originales
 # (el argumento -t_srs debe tener el CRS adecuado)
 gdalwarp $reflectancia_wgs84 $reflectancia -t_srs EPSG:32616
+
+![](img/reflectancia.png)
+Imagen: Pila con valores de reflectancia en falso color (4-3-2).
 ```
