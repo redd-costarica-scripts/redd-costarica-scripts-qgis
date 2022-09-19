@@ -6,7 +6,7 @@ Este repositorio contiene un conjunto de *scripts* para procesar datos de Costa 
 
 ### Herramientas
 
-1. [QGIS](https://qgis.org): sistema de información geográfica. En este proyecto, se utilizó la **versión 3.22.11 Białowieża LTR**. Siga las instrucciones correspondiente a su sistema operativo en la [página de descargas de QGIS](https://qgis.org/en/site/forusers/download.html). Para el caso de Microsoft Windows, se recomienda el instalador [OSGeo4W](https://qgis.org/en/site/forusers/alldownloads.html#osgeo4w-installer).
+1. [QGIS](https://qgis.org): sistema de información geográfica. En este proyecto, se utilizó la **versión 3.22.11 Białowieża LTR**. Siga las instrucciones correspondientes a su sistema operativo en la [página de descargas de QGIS](https://qgis.org/en/site/forusers/download.html). Para el caso de Microsoft Windows, se recomienda el instalador [OSGeo4W](https://qgis.org/en/site/forusers/alldownloads.html#osgeo4w-installer).
 2. [Orfeo Toolbox (OTB)](http://orfeo-toolbox.org/): biblioteca para procesamiento de imágenes de satélite. En este proyecto, se utilizó la **versión 8.1.0**. Siga las instrucciones correspondientes a su sistema operativo en la [página de descargas de OTB](https://www.orfeo-toolbox.org/download/).
     1. Configure la [interfaz de QGIS para OTB](https://www.orfeo-toolbox.org/CookBook/QGISInterface.html).
 3. [Fmask](https://github.com/GERSL/Fmask): software para detección de nubes y sombras en imágenes satelitales. En este proyecto, se utilizó la **versión 4.6**. Siga las instrucciones correspondientes a su sistema operativo.
@@ -68,6 +68,12 @@ D:\img\LC09_L1TP_016052_20220123_20220124_02_T1>dir
 ### 2. Detección de nubes y sombras
 Se realiza con el programa FMask. Debe ejecutarse en la línea de comandos del sistema operativo y desde el directorio en el que se encuentran los archivos de la imagen.
 
+Entradas:
+- Directorio con archivos de la imagen.
+
+Salidas:
+- Archivo raster con pixeles marcados como tierra, agua, nubes o sombras.
+
 ```shell
 cd LC09_L1TP_016052_20220123_20220124_02_T1
 "C:\Program Files\GERS\Fmask_4_6\application\Fmask_4_6.exe"
@@ -95,16 +101,20 @@ Los pixeles de este archivo tienen 6 posibles valores:
 255 = sin observación  
 
 ![](img/fmask.png)
-
-Detección de nubes y sombras con FMask.
+Imagen: Nubes y sombras detectadas con FMask.
 
 ### 3. Creación de una pila de bandas
-Se crea una "pila" (*stack*) de bandas en un archivo. Se realiza con el programa [gdal_merge.py](https://gdal.org/programs/gdal_merge.html) de GDAL. Está disponible en la opción de menú `Raster - Miscellaneous - Merge` de QGIS.
+Se crea una "pila" (*stack*) de bandas en un archivo. Se realiza con el programa [gdal_merge.py](https://gdal.org/programs/gdal_merge.html) de GDAL. Está disponible en la opción de menú `Raster - Miscellaneous - Merge` de QGIS. Debe activarse la opción para almacenar cada archivo de entrada en una banda separada del archivo resultante con la pila.
 
-Deben combinarse las bandas de la 2 a la 7. Debe activarse la opción para almacenar cada archivo de entrada en una banda separada del archivo resultante con la pila.
+Entradas:
+- Archivos con bandas 2-7.
+
+Salidas:
+- Archivo con pila de bandas 2-7.
 
 Con bash:
 ```shell
+# Archivos de entrada con bandas 2-7
 b2=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B2.TIF
 b3=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B3.TIF
 b4=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B4.TIF
@@ -112,13 +122,63 @@ b5=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_0
 b6=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B6.TIF
 b7=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B7.TIF
 
-gdal_merge.py \
-  -o LC09_L1TP_016052_20220123_20220124_02_T1-REDD/LC09_L1TP_016052_20220123_20220124_02_T1-PILA.TIF \
-  -separate \
-  -ot Float32 \
-  $b2 $b3 $b4 $b5 $b6 $b7
+# Archivo de salida con pila de bandas 2-7
+pila=LC09_L1TP_016052_20220123_20220124_02_T1-REDD/LC09_L1TP_016052_20220123_20220124_02_T1-PILA.TIF
+
+# Creación del archivo con la pila
+gdal_merge.py -o $pila -separate -ot Float32 $b2 $b3 $b4 $b5 $b6 $b7
 ```
 
 ![](img/pila.png)
+Imagen: Pila en falso color (4-3-2).
 
-Pila en falso color (4-3-2).
+### 4. Cálculo de reflectancia
+Se realiza con el algoritmo `Reflectancia` del complemento `REDD+ Costa Rica`.
+
+Entradas:
+- Archivo con pila de bandas 2-7.
+- a
+- b
+- cenit
+
+Salidas:
+- Archivo con pila de bandas 2-7 con valores de reflectancia.
+
+Con bash:
+```shell
+# Archivos de salida con bandas 2-7 con valores de reflectancia
+b2_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B2-REFLECTANCIA.TIF
+b3_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B3-REFLECTANCIA.TIF
+b4_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B4-REFLECTANCIA.TIF
+b5_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B5-REFLECTANCIA.TIF
+b6_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B6-REFLECTANCIA.TIF
+b7_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B7-REFLECTANCIA.TIF
+
+# Archivo de salida con bandas 2-7 con valores de reflectancia en el CRS WGS84 (4326)
+# (el comando otbcli_BandMath lo está generando así)
+reflectancia_wgs84=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1-REFLECTANCIA_WGS84.TIF
+
+# Archivo de salida con bandas 2-7 con valores de reflectancia en el CRS de las bandas originales
+reflectancia_wgs84=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1-REFLECTANCIA.TIF
+
+
+# Creación de los archivos con las bandas 2-7 con valores de reflectancia
+# (a, b y cenit deben sustituirse por los valores adecuados)
+otbcli_BandMath -il $pila -out $b2_reflectancia -exp "(a*im1b1 + (b)) / cos(cenit*3.14159265359/180)"
+otbcli_BandMath -il $pila -out $b3_reflectancia -exp "(a*im1b2 + (b)) / cos(cenit*3.14159265359/180)"
+otbcli_BandMath -il $pila -out $b4_reflectancia -exp "(a*im1b3 + (b)) / cos(cenit*3.14159265359/180)"
+otbcli_BandMath -il $pila -out $b5_reflectancia -exp "(a*im1b4 + (b)) / cos(cenit*3.14159265359/180)"
+otbcli_BandMath -il $pila -out $b6_reflectancia -exp "(a*im1b5 + (b)) / cos(cenit*3.14159265359/180)"
+otbcli_BandMath -il $pila -out $b7_reflectancia -exp "(a*im1b6 + (b)) / cos(cenit*3.14159265359/180)"
+
+# Creación del archivo con la pila con valores de reflectancia en WGS84
+gdal_merge.py \
+  -o $reflectancia_wgs84 \
+  -separate \
+  -ot Float32 \
+  $b2_reflectancia $b3_reflectancia $b4_reflectancia $b5_reflectancia $b6_reflectancia $b7_reflectancia
+
+# Creación del archivo con la pila con valores de reflectancia en el CRS de las bandas originales
+# (el argumento -t_srs debe tener el CRS adecuado)
+gdalwarp $reflectancia_wgs84 $reflectancia -t_srs EPSG:32616
+```
