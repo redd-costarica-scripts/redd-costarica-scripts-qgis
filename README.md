@@ -74,6 +74,11 @@ Entradas:
 Salidas:
 - Archivo raster con pixeles marcados como tierra, agua, nubes o sombras.
 
+```shell
+cd LC09_L1TP_016052_20220123_20220124_02_T1
+"C:\Program Files\GERS\Fmask_4_6\application\Fmask_4_6.exe"
+```
+
 ```
 09/18/2022  06:41 PM         1,691,740 LC09_L1TP_016052_20220123_20220124_02_T1_Fmask4.tif
 ```
