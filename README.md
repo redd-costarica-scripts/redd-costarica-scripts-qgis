@@ -143,7 +143,7 @@ Imagen: Pila con normalización horaria en falso color (4-3-2).
 ### 6. Normalización radiométrica
 
 #### 6.1. Recorte de la imagen de referencia con la máscara vectorial del contorno del país
-Se realiza con la herramienta `Clip raster by mask layer (gdalwarp)` de `Processing`.
+Se realiza con la herramienta `Clip raster by Mask Layer (gdalwarp)` de `Processing`.
 
 **Entradas**
 - Imagen de referencia para la "pasada" correspondiente (P14, P15, P16)
@@ -153,6 +153,11 @@ Se realiza con la herramienta `Clip raster by mask layer (gdalwarp)` de `Process
 - Imagen de referencia recortada
 
 ![](img/recortar-referencia-p16-01.png)
+Imagen: Herramienta `Clip raster by Mask Layer (gdalwarp)` de `Processing`.
+
+![](img/referencia-p16-recortada.png)
+Imagen: Imagen de referencia recortada.
+
 
 ## Procedimientos en bash
 
