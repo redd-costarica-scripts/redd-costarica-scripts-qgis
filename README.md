@@ -64,6 +64,7 @@ D:\img\LC09_L1TP_016052_20220123_20220124_02_T1>dir
               24 File(s)  1,252,131,025 bytes
 ```
 
+
 ### 2. Detección de nubes y sombras
 Se realiza con el programa FMask. Debe ejecutarse en la línea de comandos del sistema operativo y desde el directorio en el que se encuentran los archivos de la imagen.
 
@@ -72,19 +73,6 @@ Entradas:
 
 Salidas:
 - Archivo raster con pixeles marcados como tierra, agua, nubes o sombras.
-
-```shell
-cd LC09_L1TP_016052_20220123_20220124_02_T1
-"C:\Program Files\GERS\Fmask_4_6\application\Fmask_4_6.exe"
-```
-
-Con bash:
-```shell
-cd LC09_L1TP_016052_20220123_20220124_02_T1
-/usr/GERS/Fmask_4_6/application/run_Fmask_4_6.sh /usr/local/MATLAB/MATLAB_Runtime/v910
-```
-
-Como resultado, FMask genera un archivo raster:
 
 ```
 09/18/2022  06:41 PM         1,691,740 LC09_L1TP_016052_20220123_20220124_02_T1_Fmask4.tif
@@ -102,86 +90,46 @@ Los pixeles de este archivo tienen 6 posibles valores:
 ![](img/fmask.png)
 Imagen: Nubes y sombras detectadas con FMask.
 
+
 ### 3. Creación de una pila de bandas
 Se crea una "pila" (*stack*) de bandas en un archivo. Se realiza con el programa [gdal_merge.py](https://gdal.org/programs/gdal_merge.html) de GDAL. Está disponible en la opción de menú `Raster - Miscellaneous - Merge` de QGIS. Debe activarse la opción para almacenar cada archivo de entrada en una banda separada del archivo resultante con la pila.
 
 Entradas:
-- Archivos con bandas 2-7.
+- Archivos con bandas 2-7
 
 Salidas:
-- Archivo con pila de bandas.
-
-Con bash:
-```shell
-# Archivos de entrada con bandas 2-7
-b2=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B2.TIF
-b3=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B3.TIF
-b4=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B4.TIF
-b5=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B5.TIF
-b6=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B6.TIF
-b7=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B7.TIF
-
-# Archivo de salida con pila de bandas
-pila=LC09_L1TP_016052_20220123_20220124_02_T1-REDD/LC09_L1TP_016052_20220123_20220124_02_T1-PILA.TIF
-
-# Creación del archivo con la pila
-gdal_merge.py -o $pila -separate -ot Float32 $b2 $b3 $b4 $b5 $b6 $b7
-```
+- Archivo con pila de bandas
 
 ![](img/pila.png)
 Imagen: Pila en falso color (4-3-2).
+
 
 ### 4. Cálculo de reflectancia
 Se realiza con el algoritmo `Reflectancia` del complemento `REDD+ Costa Rica`.
 
 Entradas:
-- Archivo con pila de bandas 2-7.
+- Archivo con pila de bandas
 - a
 - b
-- cenit
+- cénit
 
 Salidas:
-- Archivo con pila de bandas 2-7 con valores de reflectancia.
-
-Con bash:
-```shell
-# Archivos de salida con bandas 2-7 con valores de reflectancia
-b2_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B2-REFLECTANCIA.TIF
-b3_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B3-REFLECTANCIA.TIF
-b4_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B4-REFLECTANCIA.TIF
-b5_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B5-REFLECTANCIA.TIF
-b6_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B6-REFLECTANCIA.TIF
-b7_reflectancia=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B7-REFLECTANCIA.TIF
-
-# Archivo de salida con bandas 2-7 con valores de reflectancia en el CRS WGS84 (4326)
-# (el comando otbcli_BandMath lo está generando así)
-reflectancia_wgs84=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1-REFLECTANCIA_WGS84.TIF
-
-# Archivo de salida con bandas 2-7 con valores de reflectancia en el CRS de las bandas originales
-reflectancia_wgs84=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1-REFLECTANCIA.TIF
-
-
-# Creación de los archivos con las bandas 2-7 con valores de reflectancia
-# (a, b y cenit deben sustituirse por los valores adecuados)
-otbcli_BandMath -il $pila -out $b2_reflectancia -exp "(a*im1b1 + (b)) / cos(cenit*3.14159265359/180)"
-otbcli_BandMath -il $pila -out $b3_reflectancia -exp "(a*im1b2 + (b)) / cos(cenit*3.14159265359/180)"
-otbcli_BandMath -il $pila -out $b4_reflectancia -exp "(a*im1b3 + (b)) / cos(cenit*3.14159265359/180)"
-otbcli_BandMath -il $pila -out $b5_reflectancia -exp "(a*im1b4 + (b)) / cos(cenit*3.14159265359/180)"
-otbcli_BandMath -il $pila -out $b6_reflectancia -exp "(a*im1b5 + (b)) / cos(cenit*3.14159265359/180)"
-otbcli_BandMath -il $pila -out $b7_reflectancia -exp "(a*im1b6 + (b)) / cos(cenit*3.14159265359/180)"
-
-# Creación del archivo con la pila con valores de reflectancia en WGS84
-gdal_merge.py \
-  -o $reflectancia_wgs84 \
-  -separate \
-  -ot Float32 \
-  $b2_reflectancia $b3_reflectancia $b4_reflectancia $b5_reflectancia $b6_reflectancia $b7_reflectancia
-
-# Creación del archivo con la pila con valores de reflectancia en el CRS de las bandas originales
-# (el argumento -t_srs debe tener el CRS adecuado)
-gdalwarp $reflectancia_wgs84 $reflectancia -t_srs EPSG:32616
-```
+- Archivo con pila de bandas con valores de reflectancia
 
 ![](img/reflectancia.png)
 Imagen: Pila con valores de reflectancia en falso color (4-3-2).
 
+
+### 5. Normalización horaria
+Se realiza con el algoritmo `Normalización horaria` del complemento `REDD+ Costa Rica`.
+
+Entradas:
+- Archivo con pila de bandas con valores de reflectancia
+- cénit
+- cénit de referencia
+
+Salidas:
+- Archivo con pila de bandas con normalización horaria
+
+![](img/horaria.png)
+Imagen: Pila con normalización horaria en falso color (4-3-2).

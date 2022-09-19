@@ -32,6 +32,7 @@ __revision__ = '$Format:%H$'
 
 from qgis.core import QgsProcessingProvider
 from .reflectancia_algorithm import ReflectanciaAlgorithm
+from .normalizacion_horaria_algorithm import NormalizacionHorariaAlgorithm
 
 
 class Redd_CostaRicaProvider(QgsProcessingProvider):
@@ -54,6 +55,7 @@ class Redd_CostaRicaProvider(QgsProcessingProvider):
         Loads all algorithms belonging to this provider.
         """
         self.addAlgorithm(ReflectanciaAlgorithm())
+        self.addAlgorithm(NormalizacionHorariaAlgorithm())
         # add additional algorithms here
         # self.addAlgorithm(MyOtherAlgorithm())
 
