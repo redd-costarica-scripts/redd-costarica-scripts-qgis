@@ -27,7 +27,7 @@ Luego, debe instalar el complemento con la opción de menú `Complementos - Mane
 
 ## Uso
 ### 1. Descarga de la imagen 
-Para descargar la imagen, se recomienda el sitio (Earth Explorer)[https://earthexplorer.usgs.gov/] u otro similar. Como resultado de la descarga, debe obtenerse un directorio con los archivos correspondientes a las bandas y a los metadatos de la imagen. Por ejemplo:
+Para descargar la imagen, se recomienda el sitio [Earth Explorer](https://earthexplorer.usgs.gov/) u otro similar. Como resultado de la descarga, debe obtenerse un directorio con los archivos correspondientes a las bandas y a los metadatos de la imagen. Por ejemplo:
 
 ```
 D:\img\LC09_L1TP_016052_20220123_20220124_02_T1>dir
@@ -73,7 +73,13 @@ cd LC09_L1TP_016052_20220123_20220124_02_T1
 "C:\Program Files\GERS\Fmask_4_6\application\Fmask_4_6.exe"
 ```
 
-Como resultado, FMask genera un archivo raster con un nombre como:
+Con bash:
+```shell
+cd LC09_L1TP_016052_20220123_20220124_02_T1
+/usr/GERS/Fmask_4_6/application/run_Fmask_4_6.sh /usr/local/MATLAB/MATLAB_Runtime/v910
+```
+
+Como resultado, FMask genera un archivo raster:
 
 ```
 09/18/2022  06:41 PM         1,691,740 LC09_L1TP_016052_20220123_20220124_02_T1_Fmask4.tif
@@ -81,11 +87,38 @@ Como resultado, FMask genera un archivo raster con un nombre como:
 
 Los pixeles de este archivo tienen 6 posibles valores:
 
-0 = tierra
-1 = agua
-2 = sombra de nubes
-3 = nieve
-4 = nubes
-255 = sin observación
+0 = tierra  
+1 = agua  
+2 = sombra de nubes  
+3 = nieve  
+4 = nubes  
+255 = sin observación  
 
+![](img/fmask.png)
 
+Detección de nubes y sombras con FMask.
+
+### 3. Creación de una pila de bandas
+Se crea una "pila" (*stack*) de bandas en un archivo. Se realiza con el programa [gdal_merge.py](https://gdal.org/programs/gdal_merge.html) de GDAL. Está disponible en la opción de menú `Raster - Miscellaneous - Merge` de QGIS.
+
+Deben combinarse las bandas de la 2 a la 7. Debe activarse la opción para almacenar cada archivo de entrada en una banda separada del archivo resultante con la pila.
+
+Con bash:
+```shell
+b2=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B2.TIF
+b3=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B3.TIF
+b4=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B4.TIF
+b5=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B5.TIF
+b6=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B6.TIF
+b7=LC09_L1TP_016052_20220123_20220124_02_T1/LC09_L1TP_016052_20220123_20220124_02_T1_B7.TIF
+
+gdal_merge.py \
+  -o LC09_L1TP_016052_20220123_20220124_02_T1-REDD/LC09_L1TP_016052_20220123_20220124_02_T1-PILA.TIF \
+  -separate \
+  -ot Float32 \
+  $b2 $b3 $b4 $b5 $b6 $b7
+```
+
+![](img/pila.png)
+
+Pila en falso color (4-3-2).
