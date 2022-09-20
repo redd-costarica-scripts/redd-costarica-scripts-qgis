@@ -180,7 +180,7 @@ Figura. Herramienta `Clip raster by Mask Layer (gdalwarp)` de `Processing`.
 Figura. Imagen con normalización horaria recortada.
 
 
-### 6.3. Ejecución de `imad.py`
+#### 6.3. Ejecución de `imad.py`
 Se ejecuta desde la consola de Python en QGIS o (en Microsoft Windows) desde la 
 línea de comandos de `OSGeo4W Shell` (esta opción permite visualizar mejor el progreso del script y los mensajes de error). **En ambos casos, deben modificarse las rutas de los archivos de entrada y salida ubicados al inicio del script**.
 
@@ -196,7 +196,7 @@ python imad.py
 - IMAD.tif
 
 
-### 6.4. Ejecución de `radcal.py`
+#### 6.4. Ejecución de `radcal.py`
 Se ejecuta desde la consola de Python en QGIS o (en Microsoft Windows) desde la 
 línea de comandos de `OSGeo4W Shell` (esta opción permite visualizar mejor el progreso del script y los mensajes de error). **En ambos casos, deben modificarse las rutas de los archivos de entrada y salida ubicados al inicio del script**.
 
@@ -216,6 +216,25 @@ python radcal.py
 
 Figura. Imagen con normalización radiométrica.
 
+
+### 7. Cálculo de índices de vegetación y textura
+Se realiza con el algoritmo `Índices de vegetación y textura` del complemento `REDD+ Costa Rica`.
+
+Entradas:
+- Imagen con normalización radiométrica
+
+Salidas:
+- Índice de vegetación NDVI
+- Índices de textura de Haralick
+
+![](img/calcular-indices-vegetacion-textura.png)
+Figura. Cálculo de índices de vegetación y textura.
+
+![](img/ndvi.png)
+Figura. Índice de vegetación NDVI.
+
+![](img/haralick.png)
+Figura. Índices de textura de Haralick.
 
 ## Procedimientos en bash
 

@@ -33,6 +33,7 @@ __revision__ = '$Format:%H$'
 from qgis.core import QgsProcessingProvider
 from .reflectancia_algorithm import ReflectanciaAlgorithm
 from .normalizacion_horaria_algorithm import NormalizacionHorariaAlgorithm
+from .indices_vegetacion_textura_algorithm import IndicesVegetacionTexturaAlgorithm
 
 
 class Redd_CostaRicaProvider(QgsProcessingProvider):
@@ -56,6 +57,7 @@ class Redd_CostaRicaProvider(QgsProcessingProvider):
         """
         self.addAlgorithm(ReflectanciaAlgorithm())
         self.addAlgorithm(NormalizacionHorariaAlgorithm())
+        self.addAlgorithm(IndicesVegetacionTexturaAlgorithm())
         # add additional algorithms here
         # self.addAlgorithm(MyOtherAlgorithm())
 
