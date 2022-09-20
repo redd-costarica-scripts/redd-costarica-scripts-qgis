@@ -180,6 +180,39 @@ Figura. Herramienta `Clip raster by Mask Layer (gdalwarp)` de `Processing`.
 Figura. Imagen con normalización horaria recortada.
 
 
+### 6.3. Ejecución de `imad.py`
+Se ejecuta desde la consola de Python en QGIS o (en Microsoft Windows) desde la 
+línea de comandos de `OSGeo4W Shell` (esta opción permite visualizar mejor el progreso del script y los mensajes de error). **En ambos casos, deben modificarse las rutas de los archivos de entrada y salida ubicados al inicio del script**.
+
+Si se ejecuta desde QGIS, debe abrirse el script en el editor de la consola de Python y presionar el botón `Run Script`.
+
+Si se ejecuta desde `OSGeo4W Shell`:
+```shell
+cd redd-costarica-scripts-qgis
+python imad.py
+```
+
+**Salidas**
+- IMAD.tif
+
+
+### 6.4. Ejecución de `radcal.py`
+Se ejecuta desde la consola de Python en QGIS o (en Microsoft Windows) desde la 
+línea de comandos de `OSGeo4W Shell` (esta opción permite visualizar mejor el progreso del script y los mensajes de error). **En ambos casos, deben modificarse las rutas de los archivos de entrada y salida ubicados al inicio del script**.
+
+Si se ejecuta desde QGIS, debe abrirse el script en el editor de la consola de Python y presionar el botón `Run Script`.
+
+Si se ejecuta desde `OSGeo4W Shell`:
+```shell
+cd redd-costarica-scripts-qgis
+python radcal.py
+```
+
+**Salidas**
+- RADCAL.tif
+- RADIOMETRICA.tif
+
+
 ## Procedimientos en bash
 
 ### 1. Descarga de la imagen
