@@ -236,6 +236,51 @@ Figura. Índice de vegetación NDVI.
 ![](img/haralick.png)
 Figura. Índices de textura de Haralick.
 
+
+### 8. Creación de máscaras de nubes y de sombras
+Se crean con la herramienta `r.reclass` de `Processing`.
+
+**Entradas**
+- Archivo raster generado por FMask en el paso 2
+- Archivos con reglas
+
+**Salidas**
+- Máscara raster de nubes (nubes = 1, otros = 0)
+- Máscara raster de sombras (sombras = 1, otros = 0)
+
+![](img/mascara-nubes.png)
+
+Figura. Máscara de nubes.
+
+![](img/mascara-sombras.png)
+
+Figura. Máscara de sombras.
+
+
+### 9. Recorte de las máscaras de nubes y de sombras con la máscara raster del contorno del país
+Se crea con la herramienta `r.mapcalc.simple` de `Processing`.
+
+**Entradas**
+- (A) Máscara de nubes creada en el paso 8 (nubes = 1, otros = 0)
+- (A) Máscara de sombras creada en el paso 8 (sombras = 1, otros = 0)
+- (B) Máscara raster del contorno del país para la "pasada" (P14, P15, P16) correspondiente a la imagen (fuera del país = 1, dentro del país = 0)
+
+**Salidas**
+- Máscara raster de nubes recortada con el contorno del país (nubes = 1, otros = 0)
+- Máscara raster de sombras recortada con el contorno del país (sombras = 1, otros = 0)
+
+**Fórmula**
+`if(A+B == 2, 1, A+B)`
+
+![](img/mascara-nubes-recortada.png)
+
+Figura. Máscara de nubes recortada con el contorno del país.
+
+![](img/mascara-sombras-recortada.png)
+
+Figura. Máscara de sombras recortada con el contorno del país.
+
+
 ## Procedimientos en bash
 
 ### 1. Descarga de la imagen
