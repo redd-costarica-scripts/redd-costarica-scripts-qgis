@@ -212,6 +212,10 @@ python radcal.py
 - RADCAL.tif
 - RADIOMETRICA.tif
 
+![](img/radiometrica.png)
+
+Figura. Imagen con normalización radiométrica.
+
 
 ## Procedimientos en bash
 
