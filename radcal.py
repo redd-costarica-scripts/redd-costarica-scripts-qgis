@@ -14,13 +14,13 @@ imagen_a_normalizar = imagen_a_normalizar = "D:/redd/img/LC09_L1TP_016052_202201
 # fsfile = "horaria.tif"
 fsfile = "D:/redd/img/LC09_L1TP_016052_20220123_20220124_02_T1-SALIDA/LC09_L1TP_016052_20220123_20220124_02_T1-HORARIA.tif"
 # iMad = "imad.tif"
-iMad = "D:/redd/img/LC09_L1TP_016052_20220123_20220124_02_T1-SALIDA/IMAD.TIF"
+iMad = "D:/redd/img/LC09_L1TP_016052_20220123_20220124_02_T1-SALIDA/IMAD.tif"
 ncpThresh = 0.95
 format_1GTiff_2PCIDSK_3HFA_4_ENVI = 1
 # outfile = "radcal.tif"
-outfile = "D:/redd/img/LC09_L1TP_016052_20220123_20220124_02_T1-SALIDA/RADCAL.TIF"
+outfile = "D:/redd/img/LC09_L1TP_016052_20220123_20220124_02_T1-SALIDA/RADCAL.tif"
 # fsoutfile = "radiometrica.tif"
-fsoutfile = "D:/redd/img/LC09_L1TP_016052_20220123_20220124_02_T1-SALIDA/RADIOMETRICA.TIF"
+fsoutfile = "D:/redd/img/LC09_L1TP_016052_20220123_20220124_02_T1-SALIDA/RADIOMETRICA.tif"
 
 
 # ---------------------
